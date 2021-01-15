@@ -1,35 +1,14 @@
-/*eslint-disable*/
 <template>
-<div class="wrapper">
-  <div class="card radius shadowDepth1">
-    <div class="card__image border-tlr-radius">
-      <img src="http://lorempixel.com/400/200/sports/" alt="image" class="border-tlr-radius">
-      </div>
-      <div class="card__content card__padding">
-        <div class="card__share">
-          <div class="card__social">
-            <a class="share-icon facebook" href="#"><span class="fa fa-facebook"></span></a>
-            <a class="share-icon twitter" href="#"><span class="fa fa-twitter"></span></a>
-            <a class="share-icon googleplus" href="#"><span class="fa fa-google-plus"></span></a>
-            </div>
-            <a id="share" @click="toggleEdit()" class="share-toggle share-icon" href="#"></a>
-            </div>
-            <div class="card__meta">
-              <a href="#">Web Design</a>
-              <time>17th March</time>
-              </div>
-              <article class="card__article">
-                <h2><a href="#">Material Design Card - For Blog Post Article</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus harum...</p>
-                </article>
-                </div>
-                <div class="card__action">
-                  <div class="card__author">
-                    <img src="http://lorempixel.com/40/40/sports/" alt="user">
-                      </div>
-                      </div>
-                      </div>
-                      </div>
+		<div v-for="ad in ads" :key="ad.key" class="card">
+  		<img class="animal-pic" :src='ad.image' alt="Avatar">
+  		<div class="container">
+			
+    		<h4><b>{{ad.title}}</b></h4> 
+    		<p>{{ad.petAge}}</p> 
+  		</div>
+		  <button class="btn">Editare</button>
+		  <button class="btn btn-delete">Ștergere</button>
+		</div>
 </template>
 
 <script>
@@ -37,14 +16,25 @@ export default {
   name: "HelloWorld",
   props: {
     msg: String
-  }
+  },
+  data() {
+	  return {
+		  ads: []
+	  }
+  },
+    created() {
+    this.$store.dispatch("findAll").then((response) => {
+      this.ads = response.data;
+     
+    });
+  },
+  
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
-@import 'https://fonts.googleapis.com/css?family=Roboto:700,400';
+
 /*
 *  Basic Reset
 */
@@ -56,210 +46,53 @@ export default {
 	padding: 0;
 	box-sizing: border-box;
 }
-
-/**
- * Basics Styles
- */
-html {
-	font-size: 62.5%;
+html, body {
+	height: 100%;
 }
-body {
-	background-color: #eee;
-	font-family: Roboto;
-	font-weight: 400;
-	font-size: 1.6em;
-	line-height: 1.6;
-	color: #666;
-}
-
-a {
-	text-decoration: none;
-	color: #3498db;
-}
-	a:hover {
-		color: #2980b9;
-	}
-
-h2 {
-	line-height: 1.2;
-	margin-bottom: 1.6rem;
-}
-
-.wrapper {
-	max-width: 400px;
-	margin: 50px auto;
-	padding-left: 1em;
-	padding-right: 1em;
-}
-
-/**
- * Helpers
- */
-.border-tlr-radius { 
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px; 
-}
-
-.text-center { text-align: center; }
-
-.radius { border-radius: 2px; }
-
-.padding-tb { padding-top: 1.6rem; padding-bottom: 1.6rem;}
-
-.shadowDepth0 { box-shadow: 0 1px 3px rgba(0,0,0, 0.12); }
-
-.shadowDepth1 {
-  box-shadow: 
-  0 1px 3px rgba(0,0,0, 0.12),
-  0 1px 2px rgba(0,0,0, 0.24);      
-}
-
-
-/**
- * Card Styles
- */
-
 .card {
-	background-color: #fff;
-	margin-bottom: 1.6rem;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+width: 90%;
+height: 20vh;
+justify-content: center;
+align-items: center;
+display: inline;
+margin-top: 15vh;
+margin-right: 5vw;
+margin-left: 5vw;
+border-radius: 20px;
+display: flex;
+flex-direction: column;
 }
 
-.card__padding {
-	padding: 1.6rem;
-}
- 
-.card__image {
-	min-height: 100px;
-	background-color: #eee;
-}
-	.card__image img {
-		width: 100%;
-		max-width: 100%;
-		display: block;
-	}
-
-.card__content {
-	position: relative;
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-/* card meta */
-.card__meta time {
-	font-size: 1.5rem;
-	color: #bbb;
-	margin-left: 0.8rem;
-}
+.container {
+  padding: 2px 16px;
 
-/* card article */
-.card__article a {
-	text-decoration: none;
-	color: #444;
-	transition: all 0.5s ease;
 }
-	.card__article a:hover {
-		color: #2980b9;
-	}
-
-/* card action */
-.card__action {
-	overflow: hidden;
-	padding-right: 1.6rem;
-	padding-left: 1.6rem;
-	padding-bottom: 1.6rem;
+.btn {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 20px;
 }
-
-.card__author img,
-.card__author-content {
-	display: inline-block;
-	vertical-align: middle;
+.btn:hover {
+  background-color: RoyalBlue;
 }
-
-.card__author img{
-	border-radius: 50%;
-	margin-right: 0.6em;
+.btn-delete {
+	background-color: rgb(185, 38, 38);
 }
-
-.card__share {
-	float: right;
-	position: relative;
-	margin-top: -42px;
+.btn-delete:hover {
+	background-color: rgb(122, 38, 38);
 }
-
-.card__social {
-	position: absolute;
-	top: 0;
-	right: 0;
-	visibility: hidden;
-	width: 160px;
-	transform: translateZ(0);
-  transform: translateX(0px);
-  transition: transform 0.35s ease;
+.animal-pic {
+	width: 40%;
+	border-radius: 20px;
 }
-.card__social--active {
-visibility: visible;
-/*z-index: 3;*/
-transform: translateZ(0);
-transform: translateX(-48px);
-transition: transform 0.35s ease;
-}
-
-.share-toggle {
-	z-index: 2;
-}
-.share-toggle:before {
-	content: "\f1e0";
-	font-family: 'FontAwesome';
-	color: #3498db;
-}
-	.share-toggle.share-expanded:before {
-		content: "\f00d";
-	}
-
-.share-icon {
-	display: inline-block;
-	width: 48px;
-	height: 48px;
-	line-height: 48px;
-	text-align: center;
-	border-radius: 50%;
-	background-color: #fff;
-	transition: all 0.3s ease;
-	outline: 0;
-	box-shadow: 
-  0 2px 4px rgba(0,0,0, 0.12),
-  0 2px 4px rgba(0,0,0, 0.24);
-}
-.share-icon:hover,
-.share-icon:focus {
-  box-shadow: 
-  0 3px 6px rgba(0,0,0, 0.12),
-  0 3px 6px rgba(0,0,0, 0.24);
-  -webkit-transform: scale(1.2);
-  -moz-transform: scale(1.2);
-  -ms-transform: scale(1.2);
-	-o-transform: scale(1.2);
-  transform: scale(1.2);
-  }
-
-.facebook {
-	background-color: #3b5998; 
-}
-.twitter {
-	background-color: #00abe3; 
-}
-.googleplus {
-	background-color: #d3492c;
-}
-
-.facebook,
-.twitter,
-.googleplus {
-	color: #fff;
-}
-
-	.facebook:hover,
-	.twitter:hover,
-	.googleplus:hover {
-		color: #eee;
-	}
-
 </style>

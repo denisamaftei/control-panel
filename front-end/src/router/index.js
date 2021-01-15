@@ -1,25 +1,23 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Cookies from 'js-cookie'
 
 const routes = [
   {
-    path: "/",
+    path: "/home",
     name: "Home",
-    component: Home
+    component: () => 
+      import("../views/Home.vue")
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: "/login",
+    name: "Login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+      import("../views/About.vue")
   },
-    {
-    path: '/:pathMatch(.*)*',
-    component: () => import("../views/Error404.vue")
-  }
+  //   {
+  //   path: '/:pathMatch(.*)*',
+  //   component: () => import("../views/Error404.vue")
+  // }
 ];
   // Always leave this as last one,
   // but you can also remove it
@@ -28,5 +26,19 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 });
+
+// router.beforeResolve((to, from, next) => {
+//   if (to.path === '/') {
+//     if (Cookies.get('user-logIn') === "1")
+//       next('/')
+//   }
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     if (Cookies.get('user-logIn') === "1")
+//       next()
+//     else next('/login')
+//   } else {
+//     next()
+//   }
+// })
 
 export default router;

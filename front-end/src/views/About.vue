@@ -5,18 +5,40 @@
   <!-- fieldsets -->
   <fieldset>
     <h1 class="fs-title">Intră în cont</h1>
-    <input type="text" name="email" placeholder="Email" />
-    <input type="password" name="pass" placeholder="Password" />
-    <input @click="this.$router.push({path: '/'})" type="button" name="next" class="next action-button" value="Conectează-te" />
+    <input type="text" name="email" v-model="email" placeholder="Email" />
+    <input type="password" v-model="password" name="pass" placeholder="Password" />
+    <input  type="button" name="next" class="next action-button" value="Conectează-te" />
   </fieldset>
 </form>
 
   </div>
 </template>
 <script>
+import Cookies from "js-cookie";
 export default {
-  methods: {
 
+	data(){
+		return {
+			email: "",
+			password: ""
+		}
+	},		
+  methods: {
+	login() {
+		this.$store.dispatch("login", {
+			email: this.email,
+			password: this.password
+	})
+		.then((res) => {
+
+			Cookies.set("user-login", "1", { expires: 365});
+			Cookies.set("uuid", res.data.userId, { expires: 365 });
+
+		})
+		.catch(error => {
+			console.log(error)
+		});
+	}
   }
 }
 </script>
